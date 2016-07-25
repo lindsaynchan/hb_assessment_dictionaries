@@ -70,13 +70,7 @@ def get_melon_price(melon_name):
             "Christmas": 14.25
     }
 
-    #if the melon name is not in the keys of the melons dictionary
-    if melon_name not in melons.keys():
-        #print no price found
-        print "'No price found'"
-    #return the price of the melon
-    else:
-        return melons[melon_name]
+    print melons.get(melon_name, "'No price found'")
 
 
 def word_length_sorted(words):
@@ -104,7 +98,8 @@ def word_length_sorted(words):
         letter_count = len(word)
         #if letter count key doesn't exist, add key with empty list; otherwise
         #add the new word to the current list
-        counts_words[letter_count] = counts_words.get(letter_count, []) + [word]
+        counts_words[letter_count] = counts_words.get(letter_count, [])
+        counts_words[letter_count].append(word)
 
     #create an empty list that will be returned
     counts_words_list = []
@@ -228,7 +223,30 @@ def kids_game(names):
     good solutions here will definitely require a dictionary.
     """
 
-    return []
+    results = [names[0]]
+
+    changing_names_list = names[1:]
+
+    first_letter_to_words = {}
+
+    for name in changing_names_list:
+
+      if name[0] not in first_letter_to_words:
+        first_letter_to_words[name[0]] = [name]
+      else:
+        first_letter_to_words[name[0]].append(name)
+
+    while True:
+
+      last_character = results[-1][-1]
+
+      if not first_letter_to_words.get(last_character):
+        break
+      else:
+        word = first_letter_to_words[last_character].pop(0)
+        results.append(word)
+
+    return results
 
 #####################################################################
 # You can ignore everything below this.
